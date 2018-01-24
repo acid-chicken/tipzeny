@@ -86,12 +86,13 @@ def helptweet(status,txt):
 
 # ツイート処理
 def on_tweet(status):
-	if status.text.find("RT") == -1 and status.text.find("QT") == -1 and status.user.screen_name != "zenytips":
-		if status.text.find("@zenytips") == -1:
+	text = status.truncated if status.extended_tweet.full_text else status.text
+	if text.find("RT") == -1 and text.find("QT") == -1 and status.user.screen_name != "zenytips":
+		if text.find("@zenytips") == -1:
 			return
 
 		name = status.user.screen_name
-		message = status.text[(status.text.find("@zenytips")+10):]
+		message = text[(text.find("@zenytips")+10):]
 		account = "tipzeny-" + str(status.user.id)
 
 		if re.search("balance", message) or re.search(u"残高", message):
